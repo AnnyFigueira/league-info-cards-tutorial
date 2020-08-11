@@ -1,6 +1,7 @@
 import Nullstack from 'nullstack';
 import './Application.css';
 import Header from './Header';
+import ChampionList from './ChampionList';
 
 class Application extends Nullstack {
 
@@ -21,21 +22,25 @@ class Application extends Nullstack {
 
   static async loadInitialContext({versions}) {
     const version = versions[0];
-    return {versions, version};
+    const champions = [
+      {name: 'Caitlyn', slug: 'caitlyn'},
+      {name: 'Ashe', slug: 'ashe'}
+    ];
+    return {champions, versions, version};
   }
 
   async initiate(context) {
-    const {versions, version} = await this.loadInitialContext();
+    const {champions, versions, version} = await this.loadInitialContext();
     context.versions = versions;
     context.version = version;
+    context.champions = champions;
   }
 
   render({page}) {
     return (
       <main class="sm-p10t sm-p2x md+p8t pt:p0t">
         <Header />
-        <h1> {page.title} </h1>
-        <a href="https://github.com/nullstack/nullstack" target="_blank"> Read the documentation </a>
+        <ChampionList />
       </main>
     )
   }
